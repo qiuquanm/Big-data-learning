@@ -1,4 +1,4 @@
-
+﻿
 =======================
 
 =======================
@@ -6,21 +6,6 @@
 =======================
 
 =======================
-
-
-配置环境变量
-.bash_profile 
-/etc/profile
-=======================
-#JAVA PATH
-export JAVA_HOME=????
-export PATH=$PATH:$JAVA_HOME/bin
-
-#hadoop PATH
-export HADOOP_HOME=???????
-export PATH=$PATH:$HADOOP_HOME/bin
-=======================
-
 
 
 ssh免密码登录
@@ -29,11 +14,29 @@ ssh-keygen -t rsa
 cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
 =======================
 
+
+配置环境变量
+.bash_profile 
+/etc/profile
+source ~/.bash_profile
+=======================
+#JAVA PATH
+export JAVA_HOME=
+export PATH=$PATH:$JAVA_HOME/bin
+
+#hadoop PATH
+export HADOOP_HOME=
+export PATH=$PATH:$HADOOP_HOME/bin
+#别名
+alias hfs="hadoop fs"
+=======================
+
+
 hadoop-env.sh
 =======================
 # The java implementation to use.
 #export JAVA_HOME=${JAVA_HOME}
-export JAVA_HOME=/home/hadoop/modules/jdk1.7.0_79
+export JAVA_HOME=
 =======================
 
 core-site.xml
@@ -45,7 +48,7 @@ core-site.xml
 </property>
 <property>
 <name>hadoop.tmp.dir</name>
-<value>/home/hadoop/modules/tmp</value>
+<value>/home/hadoop/softwares/tmp</value>
 </property>
 </configuration>
 =======================
@@ -81,3 +84,55 @@ mapred-site.xml
 </configuration>
 =======================
 
+格式化namenode
+=======================
+hadoop hdfs namenode format
+=======================
+
+
+wordcount统计词
+=======================
+hadoop jar /share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar wordcount /input/*.xml /output
+hadoop jar hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar grep ~/data/input/ ~/data/output '[a-z]+'
+=======================
+
+install_hadoop.sh
+=======================
+#!/bin/bash
+
+decompression()
+{
+	echo "==============Unzip================="
+	hadoopdir="home/hadoop/softwares/hadoop-2.6.0-cdh5.7.0/etc/hadoop/"
+	filedir="softwares"
+	java_package="jdk-7u79-linux-x64.tar.gz"
+	hadoop_package="hadoop-2.6.0-cdh5.7.0.tar.gz"
+
+	mkdir $filedir
+	tar -zxvf $java_package -C $filedir
+	tar -zxvf $hadoop_package -C $filedir
+	#cp $hadoopdir+mapred-site.xml
+	#vim -O $hadoopdir hadoop-env.sh core-site.xml mapred-site.xml  yarn-site.xml 
+}
+
+sshkey()
+{
+	echo "===========SSHKEYSET================="
+	ssh-keygen -t rsa
+    cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+}
+
+
+/hadoop-2.6.0-cdh5.7.0/etc/hadoop
+
+
+#run
+echo "==========欢迎使用!============="
+echo "==========INSTALL============="
+sshkey()
+decompression()
+
+
+echo "==========END============="
+
+=======================
