@@ -125,6 +125,7 @@ export JAVA_HOME=	#你jdk解压的路径
 ### 3.2 格式化hdfs文件系统
 
 ```sh
+hdfs namenode -format
 hadoop fs namenode -format       # 首次运行需要执行初始化，之后不需要
 ```
 
