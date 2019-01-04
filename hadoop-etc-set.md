@@ -77,10 +77,11 @@ export JAVA_HOME=	#你jdk解压的路径
 `core-site.xml`
 
 ```xml
+#localhost.localdomain 自己的主机名
 <configuration>
 <property>
 <name>fs.defaultFS</name>
-<value>hdfs://localhost:8020</value>
+<value>hdfs://localhost.localdomain:8020</value>
 </property>
 <property>
 <name>hadoop.tmp.dir</name>
@@ -179,7 +180,7 @@ hadoop jar hadoop-2.6.0-cdh5.7.0/share/hadoop/mapreduce/hadoop-mapreduce-example
 ```sh
 mkdir input
 cp hadoop-2.6.0-cdh5.7.0/etc/hadoop/* input/
-hadoop fd -put input/ /	#把当前文件下的input文件上传到hdfs文件系统的/目录
+hadoop fs -put input/ /	#把当前文件下的input文件上传到hdfs文件系统的/目录
 ```
 
 ```shell
