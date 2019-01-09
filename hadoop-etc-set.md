@@ -167,7 +167,7 @@ hadoop jar hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar grep ~/input/ ~/output '
 #### 4.2 计算PI
 
 ```sh
-hadoop jar hadoop-2.6.0-cdh5.7.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar pi 10 200
+hadoop jar hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar pi 10 200
 ```
 
 > 其中：
@@ -184,7 +184,7 @@ hadoop fs -put input/ /	#把当前文件下的input文件上传到hdfs文件系�
 ```
 
 ```shell
-hadoop jar hadoop-2.6.0-cdh5.7.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar wordcount /input/*.xml /output
+hadoop jar hadoop-mapreduce-examples-2.6.0-cdh5.7.0.jar wordcount /input/*.xml /output
 ```
 
 
@@ -206,41 +206,4 @@ hadoop jar hadoop-2.6.0-cdh5.7.0/share/hadoop/mapreduce/hadoop-mapreduce-example
 **配置内容还不够完善，有错误欢迎指出!**
 
 -----------------------------------
-
-
-
-### 自己写的一个安装Hadoop的shell还不够成熟 install_hadoop.sh
-
-```sh
-#!/bin/bash
-
-decompression()
-{
-	echo "==============Unzip================="
-	hadoopdir="home/hadoop/softwares/hadoop-2.6.0-cdh5.7.0/etc/hadoop/"
-	filedir="softwares"
-	java_package="jdk-7u79-linux-x64.tar.gz"
-	hadoop_package="hadoop-2.6.0-cdh5.7.0.tar.gz"
-
-	mkdir $filedir
-	tar -zxvf $java_package -C $filedir
-	tar -zxvf $hadoop_package -C $filedir
-	#cp $hadoopdir+mapred-site.xml
-	#vim -O $hadoopdir hadoop-env.sh core-site.xml mapred-site.xml  yarn-site.xml 
-}
-sshkey()
-{
-	echo "===========SSHKEYSET================="
-	ssh-keygen -t rsa
-    cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
-}
-#/hadoop-2.6.0-cdh5.7.0/etc/hadoop
-#run
-echo "==========欢迎使用!============="
-echo "==========INSTALL============="
-sshkey()
-decompression()
-echo "==========END============="
-
-```
 
