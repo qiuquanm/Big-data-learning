@@ -17,8 +17,8 @@ Exp(){
 	#echo "##解压&&配置环境变量"
 	cd ~/
 	mkdir modules
-	#wget -c ftp://172.16.9.74/jdk-7u79-linux-x64.tar.gz
-	#wget -c ftp://172.16.9.74/hadoop-2.6.0-cdh5.7.0.tar.gz
+	wget -c ftp://172.16.9.74/jdk-7u79-linux-x64.tar.gz
+	wget -c ftp://172.16.9.74/hadoop-2.6.0-cdh5.7.0.tar.gz
 	tar -zxvf jdk-7u79-linux-x64.tar.gz -C modules
 	#echo "jdk解压完成！"
 	tar -zxvf hadoop-2.6.0-cdh5.7.0.tar.gz -C modules

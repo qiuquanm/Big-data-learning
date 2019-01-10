@@ -746,17 +746,24 @@ www.rpmfind.net
 
 iso镜像文件挂载
 
-```
+```sh
+#开机自动挂载
+vi /etc/fstab 
+/root/CentOS.iso      /opt/centos/    iso9660 defaults 0 0
+
+#手动挂载
 mkdir /mnt/cdrom
-mount -t iso9660 -o loop xxxxxxxxxx.iso /mnt/cdrom/
+mount -t iso9660 -o loop xx.iso /mnt/cdrom/
+mount -o loop CentOS.iso /opt/centos
 ```
 
 1：挂载光盘镜像
 
 ```sh
 [root@centos ~]# mkdir /mnt/cdrom 
-[root@centos ~]# mount /dev/cdrom  /mnt/cdrom/ 
+[root@centos ~]# mount /dev/cdrom  /mntcdrom/ 
 mount: block device /dev/sr0 is write-protected, mounting read-only
+[root@centos ~]# umount /mnt/cdrom	#卸载挂载的镜像
 ```
 2: 备份一下配置文件
 
@@ -773,8 +780,8 @@ cp /etc/yum.repos.d/Cenos-Media.repo /etc/yum.repos.d/Cenos-Media.repo.bak
 ```sh
 [root@centos ~]# vim /etc/yum.repos.d/CentOS-Media.repo 
 #修改
-[c6-media] 
-name=CentOS-$releasever - Media    #--仓库名 
+[Centos] 
+name=CentOS    #--仓库名 
 baseurl=file:///mnt/cdrom       # --软件包路径 
 gpgcheck=1       # --启用包检查 
 enabled=1         #--启用这个仓库 
@@ -783,20 +790,21 @@ gpgkey=file:///mnt/cdrom/RPM-GPG-KEY-CentOS-6 #此处改为挂载的光盘路径
 
  4.常用yum基本命令
 
-> ​            yum --help                --帮助信息
-> ​            yum list                   --列出软件包
-> ​            yum repolist        --查看有多少仓库
-> ​            yum info 软件包        --软件包的信息
-> ​            yum install  软件包        --安装软件包
-> ​            yum reinstall 软件包        --覆盖安装软件包
-> ​            yum remove 软件包      --删除软件包
-> ​            yum clean 软件包    --清除软件包
-> ​            yum grouplist          --查看软件组
-> ​            yum groupinstall "软件组"    --安装软件组
-> ​            yum install info "软件组"    --查看软件组的信息
-> ​            yum remove “组件组"    --删除软件组
-> ​            yum  search  软件包    --检测是否有软件包      
-> ​            yum  update  软件包      --软件包升级
+> yum --help                --帮助信息
+> yum clean all		–清除缓存
+> yum list                   --列出软件包
+> yum repolist        --查看有多少仓库
+> yum info 软件包        --软件包的信息
+> yum install  软件包        --安装软件包
+> yum reinstall 软件包        --覆盖安装软件包
+> yum remove 软件包      --删除软件包
+> yum clean 软件包    --清除软件包
+> yum grouplist          --查看软件组
+> yum groupinstall "软件组"    --安装软件组
+> yum install info "软件组"    --查看软件组的信息
+> yum remove “组件组"    --删除软件组
+> yum  search  软件包    --检测是否有软件包      
+> yum  update  软件包      --软件包升级
 
 
 
@@ -804,7 +812,27 @@ gpgkey=file:///mnt/cdrom/RPM-GPG-KEY-CentOS-6 #此处改为挂载的光盘路径
 
 ## 磁盘管理
 
+```sh
 fdesk -l
+```
+
+
+
+## 主机名配置和域名解析
+
+```sh
+#centos6
+vim /etc/sysconfig/network #修改主机名
+
+centos7
+hostnamectl set-hostname server	#配置主机名为：server
+vi /etc/hostname	#也可以修改配置文件来修改主机名
+server
+
+vi /etc/hosts	#配置域名解析
+192.168.1.50	server
+192.168.1.60	client
+```
 
 
 
@@ -813,15 +841,16 @@ fdesk -l
 ## 举栗子
 
 权限修改
-r---->4	w---->2	x---->1
-
-u---->user	g---->group	o---->其他用户
+r---->4	
+w---->2	
+x---->1
+u---->user	
+g---->group	
+o---->其他用户
 
 ```sh
 chmod u+rex file
 ```
-
-
 
 链接
 
@@ -842,29 +871,16 @@ ln oldfile newfile
 ```sh
 rpm -ivh telnet
 rpm -e #卸载
-rpm -q #查询
-
+rpm -qa #查询
 ```
 
 
 文件检验
 ```sh
-
 find ./ -type f | xargs md5sum >> md5_rc1.txt
 find ./ -type f  -print| xargs md5sum >> md5_rc1.txt
 find ./ -type f  -print0| xargs -0 md5sum >> md5_rc1.txt
 对于常用的可以直接用于管道的命令，主要有：
-cut
-grep
-sort
-uniq
-wc
-tee
-tr
-col
-join
-paste
-expand
-xargs
+cut	grep	sort	uniq	wc	tee	tr	col	join	paste	expand	xargs
 ```
 
